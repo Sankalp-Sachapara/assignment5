@@ -24,6 +24,10 @@ import com.cestar.model.Book;
 @RequestMapping("/api/books")
 public class BookController {
     
+    public BookController() {
+        System.out.println("BookController initialized!");
+    }
+    
     @Autowired
     private BookDao bookDao;
     
@@ -33,8 +37,24 @@ public class BookController {
      */
     @GetMapping
     public ResponseEntity<List<Book>> getAllBooks() {
-        List<Book> books = bookDao.getAllBooks();
-        return new ResponseEntity<>(books, HttpStatus.OK);
+        System.out.println("GET /api/books endpoint called");
+        try {
+            List<Book> books = bookDao.getAllBooks();
+            System.out.println("Retrieved " + books.size() + " books");
+            return new ResponseEntity<>(books, HttpStatus.OK);
+        } catch (Exception e) {
+            System.err.println("Error in getAllBooks: " + e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    /**
+     * Test endpoint to check if controller is working
+     */
+    @GetMapping("/check")
+    public String check() {
+        return "BookController is working!";
     }
     
     /**
