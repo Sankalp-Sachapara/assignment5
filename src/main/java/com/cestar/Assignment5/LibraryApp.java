@@ -14,6 +14,9 @@ public class LibraryApp {
     public static void main(String[] args) {
         new SpringApplicationBuilder(LibraryApp.class)
             .properties("server.port=8088") // Set port here
+            .properties("logging.level.root=DEBUG") // Add debug logging
+            .properties("logging.level.com.cestar=DEBUG") // More specific logging
+            .properties("logging.level.org.springframework=INFO") // Spring framework logging
             .run(args);
     }
 }
